@@ -1,5 +1,4 @@
-"use strict";
-const express = require('express');
+import express from 'express';
 const bodyParser = require('body-parser');
 const vm = require('v-response');
 const mongoose = require('mongoose');
