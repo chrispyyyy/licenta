@@ -1,48 +1,63 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
+import TextField from "@material-ui/core/TextField";
+import Alert from "@material-ui/lab/Alert";
+import {Container} from "@material-ui/core";
+import Typography from '@material-ui/core/Typography';
+import './login.css';
+import {Navigation} from "../Navigation";
 
- export async function postData(url = '', data = {}) {
-    // Default options are marked with *
-    const response = await fetch(url, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        redirect: 'follow', // manual, *follow, error
-        referrerPolicy: 'no-referrer', // no-referrer, *client
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
-    });
-    return await response.json(); // parses JSON response into native JavaScript objects
-}
+export const Login = ({ loginUser, error }) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-
-
-export class Login extends React.Component {
-
-    componentDidMount() {
-        const data = {
-            first_name: "cris",
-            last_name: "sirb",
-            email: "cristinaaaa@yahoo.com",
-            password: "xxx"
-
-        };
-        postData('http://localhost:3000/api/user', data).then( data => {
-            console.log(data);
-        });
-    }
-
-    render() {
-        return (
-            <div>
-                <Button variant="contained" color="secondary"><a href="/users"> Hello </a> </Button>
-                <a href="/users"> Log In</a>
-                Log In!
-            </div>
-        )
+    const submit = () => {
+        loginUser({email, password});
     };
-}
+    return (
+        <div>
+        <Navigation/>
+        <Container maxWidth="sm">
+            <Typography component="div" fixed style={{ backgroundColor: '#cfe8fc', height: '50vh',
+            marginTop:'20vh'}}>
+                <div style={{
+                    padding: '100px'}}>
+            { error.length &&
+            <div className="row input">
+                <Alert severity="error" variant="outlined">{error}</Alert>
+            </div>
+            }
+            <div className="row input">
+            <TextField
+                className="input"
+                id="outlined-basic"
+                label="Email"
+                variant="outlined"
+                color="secondary"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+            />
+            </div>
+            <div className="row input">
+            <TextField
+                className="input"
+                id="outlined-basic"
+                label="Password"
+                variant="outlined"
+                color="secondary"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+            />
+            </div>
+            <div className="row input">
+            <Button variant="contained" color="secondary" onClick={submit} > Log In </Button>
+                No account?
+            <Button variant="contained" color="secondary" href='/register' > Register </Button>
+            </div>
+                </div>
+            </Typography>
+        </Container>
+        </div>
+    );
+
+};

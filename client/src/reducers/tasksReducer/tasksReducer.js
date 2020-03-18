@@ -1,13 +1,15 @@
+import { INITIAL_TASKS_STATE } from '../../initialState/INITIAL_TASKS_STATE';
+import { setTasksReducer } from "./setTasksReducer";
 
-const INITIAL_STATE = {
-    tasks: [],
+const reducers = {
+    'SET_TASKS': setTasksReducer,
 };
 
-export const tasksReducer = (state = INITIAL_STATE, action) => {
-    switch (action.type) {
-        case 'SET_TASKS': {
-            return state.tasks = action.payload;
-        }
-        default: return state;
-    }
+export const tasksReducer = (
+    state = INITIAL_TASKS_STATE,
+    action
+) => {
+    const { type, payload } = action;
+    const reducer = reducers[type];
+    return (reducer) ? reducer(state, payload) : state;
 };
