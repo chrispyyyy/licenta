@@ -1,36 +1,35 @@
 import axiosInstance from "../helpers/axiosInstance";
 
-const fetchProjects = () => {
+const fetchDashboard = () => {
     return {
-        type: 'FETCH_PROJECTS'
+        type: 'FETCH_DASHBOARD'
     }
 };
-const fetchProjectsError = (error) => {
+const fetchDashboardError = (error) => {
     return {
-        type: 'FETCH_PROJECTS_FAILED',
+        type: 'FETCH_DASHBOARD_FAILED',
         payload: error,
     }
 };
-const fetchProjectsSuccess = (projects) => {
+const fetchDashboardSuccess = (dashboard) => {
     return {
-        type: 'FETCH_PROJECTS_SUCCESS',
-        payload: projects,
+        type: 'FETCH_DASHBOARD_SUCCESS',
+        payload: dashboard,
     }
 };
 
-export const getProjectsAsync = () => {
+export const getDashboardAsync = () => {
     return function(dispatch) {
-        dispatch(fetchProjects());
+        dispatch(fetchDashboard());
         axiosInstance
             .get('/dashboard')
             .then(response => {
                 //response.data is your project data
-                console.log('Received projects: ', response.data.data);
-                dispatch(fetchProjectsSuccess(response.data.data));
+                dispatch(fetchDashboardSuccess(response.data.data));
             })
             .catch(error => {
-                console.error('Error while getting projects: ', error);
-                dispatch(fetchProjectsError(error));
+                console.error('Error while getting data: ', error);
+                dispatch(fetchDashboardError(error));
             })
     }
 };

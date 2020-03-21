@@ -6,7 +6,6 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Alert from '@material-ui/lab/Alert';
-import {Navigation} from "../Navigation";
 import {Container} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 
@@ -35,10 +34,6 @@ export const Register = ({ registerUser, error }) => {
 
     return (
         <div>
-            <Navigation/>
-            <Container maxWidth="sm">
-                <Typography component="div" fixed style={{ backgroundColor: '#cfe8fc', height: '50vh',
-                    marginTop:'10vh'}}>
             { error.length &&
                 <div className="row input">
                     <Alert severity="error" variant="outlined">{error}</Alert>
@@ -109,8 +104,6 @@ export const Register = ({ registerUser, error }) => {
             <Button variant="contained" color="secondary" onClick={submit} > Register </Button>
             <Button variant="contained" color="secondary" href='/login' > Login </Button>
             </div>
-                </Typography>
-            </Container>
         </div>
     );
 

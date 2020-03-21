@@ -4,7 +4,8 @@ import DashboardController from "./DashboardController.js";
 const router = express.Router();
 
 router.get("/dashboard", DashboardController.find);
-router.post("/dashboard", DashboardController.create);
+router.post("/dashboard/create-project", DashboardController.createProject);
+router.post("/dashboard/create-task", DashboardController.createTask);
 router.get("/dashboard/project/:name", DashboardController.findOne);
 router.delete("/dashboard/project/:name", DashboardController.deleteOne);
 

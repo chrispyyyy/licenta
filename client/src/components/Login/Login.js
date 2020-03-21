@@ -2,27 +2,20 @@ import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField";
 import Alert from "@material-ui/lab/Alert";
-import {Container} from "@material-ui/core";
-import Typography from '@material-ui/core/Typography';
 import './login.css';
-import {Navigation} from "../Navigation";
 
 export const Login = ({ loginUser, error }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    console.log('e', error);
     const submit = () => {
         loginUser({email, password});
     };
     return (
         <div>
-        <Navigation/>
-        <Container maxWidth="sm">
-            <Typography component="div" fixed style={{ backgroundColor: '#cfe8fc', height: '50vh',
-            marginTop:'20vh'}}>
                 <div style={{
                     padding: '100px'}}>
-            { error.length &&
+            { error &&
             <div className="row input">
                 <Alert severity="error" variant="outlined">{error}</Alert>
             </div>
@@ -55,8 +48,6 @@ export const Login = ({ loginUser, error }) => {
             <Button variant="contained" color="secondary" href='/register' > Register </Button>
             </div>
                 </div>
-            </Typography>
-        </Container>
         </div>
     );
 

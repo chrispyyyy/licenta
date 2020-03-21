@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import { tasksReducer } from '../reducers/tasksReducer';
+import { connectRouter } from 'connected-react-router'
 import {usersReducer} from "./usersReducer/usersReducer";
 import {dashboardReducer} from "./dashboardReducer/dashboardReducer";
 
-export const rootReducer = combineReducers({
-    tasks: tasksReducer,
+export const rootReducer = (history) => combineReducers({
+    router: connectRouter(history),
     users: usersReducer,
-    projects: dashboardReducer
+    dashboard: dashboardReducer
 });
 

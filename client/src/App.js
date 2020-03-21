@@ -1,24 +1,24 @@
 import React from 'react';
-import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router';
 import './App.css';
-import { createBrowserHistory } from 'history';
 import { RegisterContainer } from '../src/containers/RegisterContainer'
 import { LoginContainer } from '../src/containers/LoginContainer'
-import { DashboardPage } from './pages/DashboardPage';
-
-const history = createBrowserHistory();
+import {DashboardPageContainer} from "./containers/DashboardPageContainer";
+import Container from "@material-ui/core/Button";
+import {NavigationContainer} from "./containers/NavigationContainer";
 
 function App() {
   return (
     <div className="App">
-      <Router history={history}>
+        <NavigationContainer/>
+        <Container maxWidth="sm">
         <Switch>
-          <Route path="/register" component={RegisterContainer} />
-          <Route path="/login" component={LoginContainer} />
-          <Route path="/dashboard" component={ DashboardPage } />
+          <Route exact path="/register" component={RegisterContainer} />
+          <Route exact path="/login" component={LoginContainer} />
+          <Route exact path="/dashboard" component={ DashboardPageContainer } />
           <Redirect from="/" to="/login" />
         </Switch>
-      </Router>
+        </Container>
     </div>
   );
 }

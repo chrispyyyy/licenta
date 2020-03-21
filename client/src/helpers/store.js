@@ -3,6 +3,8 @@ import { createLogger } from 'redux-logger';
 import { rootReducer } from '../reducers/rootReducer';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { routerMiddleware } from 'connected-react-router'
+import {createBrowserHistory} from "history";
 
 const loggerMiddleware = createLogger();
 
@@ -26,14 +28,16 @@ const saveState = (state) => {
         // Ignore write errors;
     }
 };
+export const history = createBrowserHistory();
 
 const persistedState = loadState();
 export const store = createStore(
-    rootReducer,
+    rootReducer(history),
     persistedState,
     composeWithDevTools(
         applyMiddleware(
             thunkMiddleware,
+            routerMiddleware(history),
             loggerMiddleware
         ),
     ),

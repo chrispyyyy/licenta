@@ -1,16 +1,16 @@
-import { INITIAL_PROJECTS_STATE } from '../../initialState/INITIAL_PROJECTS_STATE';
-import { setProjectsReducer } from './setProjectsReducer';
-import { setProjectsErrorReducer } from './setProjectsErrorReducer';
+import { INITIAL_DASHBOARD_STATE } from '../../initialState/INITIAL_DASHBOARD_STATE';
+import { setDashboardReducer } from './setDashboardReducer';
+import { setDashboardErrorReducer } from './setDashboardErrorReducer';
 import { DASHBOARD_ACTIONS } from '../../constants/DASHBOARD_ACTIONS';
 
 const reducers = {
-    [DASHBOARD_ACTIONS.FETCH_PROJECTS_SUCCESS]: setProjectsReducer,
-    [DASHBOARD_ACTIONS.FETCH_PROJECTS_ERROR]: setProjectsErrorReducer,
+    [DASHBOARD_ACTIONS.FETCH_DASHBOARD_SUCCESS]: setDashboardReducer,
+    [DASHBOARD_ACTIONS.FETCH_DASHBOARD_ERROR]: setDashboardErrorReducer,
 };
 
 
 export const dashboardReducer = (
-    state = INITIAL_PROJECTS_STATE,
+    state = INITIAL_DASHBOARD_STATE,
     action
 ) => {
     const { type, payload } = action;
