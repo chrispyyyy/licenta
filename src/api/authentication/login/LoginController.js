@@ -1,36 +1,30 @@
-import RegisterModel from "../register/RegisterModel.js";
-const bcrypt = require('bcrypt');
-const vm = require('v-response');
-const jwt = require('jsonwebtoken');
+const vm = require("v-response");
+const passport = require("passport");
 
 exports.login = (req, res, next) => {
-    const email = req.body.email;
-    const password = req.body.password;
-    RegisterModel.findOne({email: email})
-        .then(user => {
-            if (!user) {
-                return res.status(400)
-                    .json(vm.ApiResponse(false, 400, "Hoops cant find a user with the provided email address please check "))
+  passport.authenticate("local", function(error, user, info) {
+    if (error) {
+      return res.status(400).json(vm.ApiResponse(false, 400, info.message));
+    }
+    if (user) {
+      req.login(user, function(err) {
+        if (err) {
+          return res.status(400).json(vm.ApiResponse(false, 400, info.message));
+        }
+        return res.status(200).json(
+          vm.ApiResponse(true, 200, info.message, {
+            user: {
+              id: user._id,
+              email: user.email,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              role: user.role
             }
-            bcrypt.compare(password, user.password)
-                .then((isMatch) => {
-                    if (!isMatch) {
-                        return res.status(400)
-                            .json(vm.ApiResponse(false, 400, "incorrect password please check and try again "))
-                    }
-                    if (isMatch) {
-                        const payload = {id: user.id};
-                        jwt.sign(payload, "keys", {expiresIn: "365d"}, (error, token) => {
-                            return res.status(200)
-                                .json(vm.ApiResponse(true, 200, "login successful", {
-                                    user: user,
-                                    toke: "Bearer " + token
-                                }));
-
-                        });
-
-                    }
-                })
-        })
-
+          })
+        );
+      });
+    } else {
+      return res.status(401).json(vm.ApiResponse(false, 401, info.message));
+    }
+  })(req, res, next);
 };

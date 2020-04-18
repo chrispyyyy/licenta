@@ -1,6 +1,7 @@
 //import the model file
 import ProjectModel from "./ProjectModel.js";
 import TaskModel from "./TaskModel.js";
+import RegisterModel from "../authentication/register/RegisterModel.js";
 const vm = require("v-response");
 
 exports.createProject = async (req, res, next) => {
@@ -82,12 +83,13 @@ exports.createTask = async (req, res, next) => {
 exports.find = (req, res, next) => {
   const projectsPromise = ProjectModel.find().sort({ createdAt: -1 });
   const tasksPromise = TaskModel.find().sort({ createdAt: -1 });
-  Promise.all([projectsPromise, tasksPromise])
-    .then(([projects, tasks]) => {
+  const usersPromise = RegisterModel.find().sort({ createdAt: -1 });
+  Promise.all([projectsPromise, tasksPromise, usersPromise])
+    .then(([projects, tasks, users]) => {
       return res
         .status(200)
         .json(
-          vm.ApiResponse(true, 200, "successfully fetched", {projects, tasks})
+          vm.ApiResponse(true, 200, "successfully fetched", {projects, tasks, users})
         );
     })
     .catch(error => {

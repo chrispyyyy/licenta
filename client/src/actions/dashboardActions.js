@@ -20,16 +20,24 @@ const fetchDashboardSuccess = (dashboard) => {
 
 export const getDashboardAsync = () => {
     return function(dispatch) {
-        dispatch(fetchDashboard());
-        axiosInstance
-            .get('/dashboard')
-            .then(response => {
-                //response.data is your project data
-                dispatch(fetchDashboardSuccess(response.data.data));
-            })
-            .catch(error => {
-                console.error('Error while getting data: ', error);
-                dispatch(fetchDashboardError(error));
-            })
-    }
+                                dispatch(fetchDashboard());
+                                axiosInstance
+                                  .get("/dashboard", { withCredentials: true })
+                                  .then(response => {
+                                    setTimeout(() => {
+                                      dispatch(
+                                        fetchDashboardSuccess(
+                                          response.data.data
+                                        )
+                                      );
+                                    }, 1000);
+                                  })
+                                  .catch(error => {
+                                    console.error(
+                                      "Error while getting data: ",
+                                      error
+                                    );
+                                    dispatch(fetchDashboardError(error));
+                                  });
+                              }
 };

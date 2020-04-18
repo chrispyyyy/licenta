@@ -1,50 +1,60 @@
-import express from "express";
-import session from "express-session";
-// const session = require('express-session');
+const express = require("express");
+const passport = require("passport");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const methodOverride = require("method-override");
+const cors = require("cors");
 const vm = require("v-response");
 const mongoose = require("mongoose");
 const config = require("config");
 import RegisterRoute from "./src/api/authentication/register/RegisterRoute.js";
 import LoginRoute from "./src/api/authentication/login/LoginRoute.js";
 import DashboardRoute from "./src/api/dashboard/DashboardRoute.js";
-
+const cookieSession = require("cookie-session");
 const port = process.env.PORT || config.get("app.port");
 const prefix = config.get("api.prefix");
 const db = config.get("database.url");
 const IN_PROD = config.get("app.environment") === "production";
 const app = express();
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept,Authorization,x-api-key"
-  );
-  next();
-});
+
+const initialize = require("./passportConfig");
+initialize(passport);
+
 app.use(
-  session({
-    cookie: {
-      maxAge: config.get("app.expiresIn"),
-      sameSite: true,
-      secure: IN_PROD
-    },
-    name: config.get("app.sessionName"),
-    saveUninitialized: false,
-    secret: config.get("app.superSecret"),
-    reSave: false
+  cors({
+    origin: "http://localhost:3000",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    credentials: true
   })
 );
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser("secret"));
+
+app.use(
+  cookieSession({
+    maxAge: config.get("app.expiresIn"),
+    name: config.get("app.sessionName"),
+    secret: "secret",
+  })
+);
+app.use(passport.initialize());
+
+app.use(passport.session());
+
+app.use(methodOverride());
+
 app.use(prefix, RegisterRoute);
 app.use(prefix, LoginRoute);
 app.use(prefix, DashboardRoute);
 
 mongoose
-  .connect(db, { useNewUrlParser: true })
-  .then(() => vm.log("connected to mongoDB", db))
-  .catch(err => vm.log("error mongodb", err));
-app.listen(port, vm.log("listing on port", port));
+    .connect(db, { useNewUrlParser: true })
+    .then(() => {
+        app.listen(port, vm.log("listing on port", port));
+        vm.log("connected to mongoDB", db);
+    })
+    .catch(err => vm.log("error mongodb", err));

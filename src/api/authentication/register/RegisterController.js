@@ -24,14 +24,14 @@ exports.create = async (req, res, next) => {
                         .then((saved) => {
                             if (!saved) {
                                 return res.status(400)
-                                    .json(vm.ApiResponse(false, 400, "an error occur please try again"));
+                                    .json(vm.ApiResponse(false, 400, "an error occurred please try again"));
                             } else {
                                 return res.status(201)
                                     .json(vm.ApiResponse(true, 201, "registration successful", saved));
                             }
                         }).catch(error => {
                         return res.status(500)
-                            .json(vm.ApiResponse(false, 500, "an error occur please try again", error));
+                            .json(vm.ApiResponse(false, 500, "an error occurred please try again", error));
                     })
 
 
@@ -49,7 +49,7 @@ exports.find = (req, res, next) => {
         .then((response) => {
             if (!response) {
                 return res.status(400)
-                    .json(vm.ApiResponse(false, 400, "hoops an error occur unable to find users"))
+                    .json(vm.ApiResponse(false, 400, "hoops an error occurred unable to find users"))
             } else {
 
                 return res.status(200)
@@ -57,18 +57,18 @@ exports.find = (req, res, next) => {
             }
         }).catch(error => {
         return res.status(500)
-            .json(vm.ApiResponse(false, 500, "hoops an error occur", undefined, error));
+            .json(vm.ApiResponse(false, 500, "hoops an error occurred", undefined, error));
     })
 
 };
 
-//find a user by id
+//find a user by email
 exports.findOne = (req, res, next) => {
-    RegisterModel.findOne({_id: req.params.id})
+    RegisterModel.findOne({email: req.params.email})
         .then(found => {
             if (!found) {
                 return res.status(400)
-                    .json(vm.ApiResponse(false, 400, "unable to find a user with provided id"))
+                    .json(vm.ApiResponse(false, 400, "unable to find a user with provided email"))
             } else if (found) {
                 return res.status(200)
                     .json(vm.ApiResponse(true, 200, "success", found))

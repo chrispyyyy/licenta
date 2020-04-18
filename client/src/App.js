@@ -6,6 +6,7 @@ import { LoginContainer } from '../src/containers/LoginContainer'
 import {DashboardPageContainer} from "./containers/DashboardPageContainer";
 import Container from "@material-ui/core/Button";
 import {NavigationContainer} from "./containers/NavigationContainer";
+import {CreateProjectPageContainer} from "./containers/CreateProjectPageContainer";
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
           <Route exact path="/register" component={RegisterContainer} />
           <Route exact path="/login" component={LoginContainer} />
           <Route exact path="/dashboard" component={ DashboardPageContainer } />
-          <Redirect from="/" to="/login" />
+          <Route exact path="/create-project" component={ CreateProjectPageContainer } />
+          <Redirect from="/logout" to="/login" />
         </Switch>
         </Container>
     </div>

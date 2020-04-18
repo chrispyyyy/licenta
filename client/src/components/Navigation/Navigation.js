@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import {CreateMenuButton} from "../CreateMenuButton";
 
 const useStyles = makeStyles(theme => ({
     grid: {
@@ -10,9 +11,11 @@ const useStyles = makeStyles(theme => ({
     },
     paper: {
         padding: theme.spacing(2),
-        textAlign: 'center',
         color: theme.palette.text.secondary,
     },
+    div: {
+        display: 'inline-flex'
+    }
 }));
 
 export const Navigation = ({ logOut, loggedUser }) => {
@@ -22,8 +25,9 @@ export const Navigation = ({ logOut, loggedUser }) => {
             <Grid item xs={10} className={classes.grid}>
                 <Paper className={classes.paper}>
                     { loggedUser &&
-                        <div>
-                        <Button onClick={logOut}> Log out</Button>
+                        <div className={classes.div}>
+                            <CreateMenuButton/>
+                        <Button href='/logout' onClick={logOut}> Log out</Button>
                             Hi, {loggedUser.firstName}
                         </div>
 
