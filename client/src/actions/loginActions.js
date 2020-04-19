@@ -39,13 +39,22 @@ export const postLoginAsync = dispatch => async payload => {
     });
 };
 
-export const logOutUser = () => {
-  return {
+export const logOutUser = () => ({
     type: USER_ACTIONS.LOG_OUT
-  };
-};
+});
 
-export const logOutUserAction = (dispatch) => async () =>{
-    dispatch(logOutUser());
-    dispatch(push('/'));
+export const logOutUserAction = () => {
+        return function(dispatch) {
+            axiosInstance
+                .get("/logout", {withCredentials: true})
+                .then(() => {
+                    dispatch(logOutUser());
+                })
+                .catch(error => {
+                    console.error(
+                        "Error while getting data: ",
+                        error
+                    );
+                });
+        }
 };

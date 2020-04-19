@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const UserModel = require('../authentication/register/UserModel');
 const Schema = mongoose.Schema;
 
 const projectSchema = new Schema({
@@ -7,30 +7,23 @@ const projectSchema = new Schema({
         type: String,
         required: true
     },
-    type: {
-        type: String,
+    members: [{
+        type: Schema.Types.ObjectId,
+        ref: UserModel,
         required: true
-    },
-    members: {
-        type: Array,
-        required: true
-    },
-    startDate: {
-        type: Date,
-        default: Date.now()
-    },
-    projectLead: {
-        type: String,
-        required: true
-    },
-    tasks: {
-        type: Array,
-        required: false
-    },
-    currentSprint: {
-        type: Number,
-        default: 1
-    }
+    }],
+    epics: [{
+        type: Schema.Types.ObjectId,
+        ref: 'EpicModel',
+    }],
+    userStories: [{
+        type: Schema.Types.ObjectId,
+        ref: 'UserStoryModel',
+    }],
+    sprints: [{
+        type: Schema.Types.ObjectId,
+        ref: 'SprintModel',
+    }]
 });
 
 export const project = mongoose.model('project', projectSchema,"project");

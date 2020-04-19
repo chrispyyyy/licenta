@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     },
 });
 
-export const ProjectCard = ({ showMore, projectName, projectDescription }) => {
+export const ProjectCard = ({ showMore, projectName }) => {
     const classes = useStyles();
 
     return (
@@ -31,9 +31,6 @@ export const ProjectCard = ({ showMore, projectName, projectDescription }) => {
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
                         {projectName}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {projectDescription}
                     </Typography>
                 </CardContent>
             </CardActionArea>

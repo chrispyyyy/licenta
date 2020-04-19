@@ -1,11 +1,11 @@
 //import the model file
-import RegisterModel from "./RegisterModel.js";
+const UserModel = require("./UserModel.js");
 const bcrypt = require('bcrypt');
 const vm = require('v-response');
 //registration of user
 exports.create = async (req, res, next) => {
     // checking if the email provided already exist in the DB
-    await RegisterModel.findOne({email: req.body.email})
+    await UserModel.findOne({email: req.body.email})
         .then(email_exist => {
             //if it exist we are returning an error message
             if (email_exist) {
@@ -14,7 +14,7 @@ exports.create = async (req, res, next) => {
             }
             // else we are creating a new user
             let registration_body = req.body;
-            const new_user = new RegisterModel(registration_body);
+            const new_user = new UserModel(registration_body);
             bcrypt.genSalt(10, (err, salt) => {
                 // here we are hashing the user password
                 bcrypt.hash(new_user.password, salt, (err, hash) => {
@@ -44,7 +44,7 @@ exports.create = async (req, res, next) => {
 
 // list of all successful registrations (user)
 exports.find = (req, res, next) => {
-    RegisterModel.find()
+    UserModel.find()
         .sort({createdAt: -1})
         .then((response) => {
             if (!response) {
@@ -64,7 +64,7 @@ exports.find = (req, res, next) => {
 
 //find a user by email
 exports.findOne = (req, res, next) => {
-    RegisterModel.findOne({email: req.params.email})
+    UserModel.findOne({email: req.params.email})
         .then(found => {
             if (!found) {
                 return res.status(400)

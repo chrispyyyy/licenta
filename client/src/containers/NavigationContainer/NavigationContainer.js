@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  logOut: dispatch(logOutUserAction)
+  logOut: dispatch(logOutUserAction())
 });
 
 export const NavigationContainer = connect(

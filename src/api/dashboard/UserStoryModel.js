@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const taskSchema = new Schema({
+const userStorySchema = new Schema({
     name: {
         type: String,
         required: true
@@ -16,29 +16,25 @@ const taskSchema = new Schema({
         ref: 'UserModel',
         required: true
     },
-    sprint: {
-        type: Schema.Types.ObjectId,
-        ref: 'SprintModel',
-    },
-    userStory: {
-        type: Schema.Types.ObjectId,
-        ref: 'UserStoryModel',
-    },
     description: {
         type: String,
         required: true
     },
     priority: {
         type: String,
-        enum: ['LOW', 'MEDIUM', 'HIGH'],
+        enum: ["LOW", "MEDIUM", "HIGH"],
         required: true
     },
     storyPoints: {
-        type: Number,
+        type: Number
+    },
+    tasks: {
+        type: Schema.Types.ObjectId,
+        ref: "TaskModel",
     },
     status: {
         type: String,
-        enum: ['TO_DO', 'IN_PROGRESS', 'DONE'],
+        enum: ['TO_DO', 'IN_ANALYSIS', 'READY_FOR_DEVELOPMENT', 'IN_DEVELOPMENT', 'READY_FOR_TESTING', 'IN_TESTING', 'DONE'],
         required: true,
         default: 'TO_DO'
     },
@@ -48,5 +44,5 @@ const taskSchema = new Schema({
     }],
 });
 
-export const task = mongoose.model('task', taskSchema);
-module.exports = task;
+export const userStory = mongoose.model("userStory", userStorySchema);
+module.exports = userStory;

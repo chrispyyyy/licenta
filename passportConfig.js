@@ -1,4 +1,4 @@
-import RegisterModel from "./src/api/authentication/register/RegisterModel";
+import UserModel from "./src/api/authentication/register/UserModel";
 const bcrypt = require("bcrypt");
 const LocalStrategy = require("passport-local").Strategy;
 
@@ -7,7 +7,7 @@ const initialize = passport => {
     new LocalStrategy(
       { usernameField: "email", passwordField: "password" },
       async (email, password, done) => {
-        RegisterModel.findOne({ email: email }).then(user => {
+        UserModel.findOne({ email: email }).then(user => {
           if (!user) {
             return done(null, false, {
               message:
@@ -33,7 +33,7 @@ const initialize = passport => {
   });
 
   passport.deserializeUser((id, done) => {
-    RegisterModel.findById(id, (err, user) => {
+    UserModel.findById(id, (err, user) => {
       done(err, user);
     });
   });

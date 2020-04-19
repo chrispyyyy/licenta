@@ -29,9 +29,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const DashboardPage = ({ projects, tasks, isFetching, filteredTasks }) => {
+export const DashboardPage = ({ projects, tasks, isFetching, epics, userStories }) => {
   const dispatch = useDispatch();
-  console.log('pr', filteredTasks);
   useEffect(() => {
     dispatch(getDashboardAsync());
   }, []);
@@ -47,7 +46,6 @@ export const DashboardPage = ({ projects, tasks, isFetching, filteredTasks }) =>
               return (
               <ProjectCard
               projectName={project.name}
-              projectDescription={project.type}
               />
               );
             })}
@@ -55,12 +53,25 @@ export const DashboardPage = ({ projects, tasks, isFetching, filteredTasks }) =>
               </Grid>
               <Grid item xs={6}>
               <Paper className={classes.tasksPaper}>
-                My Tasks
-              { filteredTasks.map(task => {
-              return (
-              <TaskExpansionPanel task={task} />
-              );
-              })}
+                Assigned to me
+                <h2>Epics</h2>
+                {
+                  epics.map(epic => {
+                    return(<TaskExpansionPanel epic={epic} />)
+                  })
+                }
+              <h2>User stories</h2>
+                {
+                  userStories.map(userStory => {
+                    return(<TaskExpansionPanel userStory={userStory} />)
+                  })
+                }
+              <h2>Tasks</h2>
+                {
+                  tasks.map(task => {
+                    return(<TaskExpansionPanel task={task} />)
+                  })
+                }
               </Paper>
               </Grid>
               <Grid item xs={3}>

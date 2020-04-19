@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export const  TaskExpansionPanel = ({ showMore, task }) => {
+export const  TaskExpansionPanel = ({ showMore, task, epic, userStory }) => {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
     const handleChange = panel => (event, isExpanded) => {
@@ -36,12 +36,12 @@ export const  TaskExpansionPanel = ({ showMore, task }) => {
                     aria-controls="panel1bh-content"
                     id="panel1bh-header"
                 >
-                    <Typography className={classes.heading}>{task.name}</Typography>
+                    <Typography className={classes.heading}>{epic.name}</Typography>
                     <Typography className={classes.secondaryHeading}>I am an expansion panel</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                     <Typography>
-                        {task.description}
+                        {epic.description}
                     </Typography>
                 </ExpansionPanelDetails>
             </ExpansionPanel>
