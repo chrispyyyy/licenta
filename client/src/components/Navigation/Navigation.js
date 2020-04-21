@@ -21,13 +21,17 @@ const useStyles = makeStyles(theme => ({
 export const Navigation = ({ logOut, loggedUser }) => {
     console.log('gg',loggedUser);
     const classes = useStyles();
+    const onLogOut = () => {
+        logOut();
+    }
+
     return (
             <Grid item xs={10} className={classes.grid}>
                 <Paper className={classes.paper}>
                     { loggedUser &&
                         <div className={classes.div}>
                             <CreateMenuButton/>
-                        <Button href='/logout' onClick={logOut}> Log out</Button>
+                        <Button onClick={onLogOut}> Log out</Button>
                             Hi, {loggedUser.firstName}
                         </div>
 

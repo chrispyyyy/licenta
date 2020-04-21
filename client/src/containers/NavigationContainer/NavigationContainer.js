@@ -7,9 +7,9 @@ const mapStateToProps = state => ({
   loggedUser: loggedUserSelector(state)
 });
 
-const mapDispatchToProps = dispatch => ({
-  logOut: dispatch(logOutUserAction())
-});
+const mapDispatchToProps = {
+  logOut: logOutUserAction
+};
 
 export const NavigationContainer = connect(
   mapStateToProps,

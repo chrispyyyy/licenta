@@ -46,7 +46,7 @@ export const logOutUser = () => ({
 export const logOutUserAction = () => {
         return function(dispatch) {
             axiosInstance
-                .get("/logout", {withCredentials: true})
+                .post("/logout", {withCredentials: true})
                 .then(() => {
                     dispatch(logOutUser());
                 })
