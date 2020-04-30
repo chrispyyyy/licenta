@@ -26,6 +26,12 @@ mongoose
     })
     .catch(err => vm.log("error mongodb", err));
 
+if (process.env.NODE_ENV === 'production'){
+    app.use(express.static(path.join(__dirname, 'client', 'build')));
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+    })
+}
 const initialize = require("./passportConfig");
 initialize(passport);
 
@@ -54,13 +60,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(methodOverride());
-
-if (process.env.NODE_ENV === 'production'){
-    app.use(express.static('client/build'));
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-    })
-}
 
 app.use(prefix, RegisterRoute);
 app.use(prefix, LoginRoute);
