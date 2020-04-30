@@ -3,6 +3,9 @@ import DashboardController from "./DashboardController.js";
 
 const router = express.Router();
 
+app.get('/', function(req, res) {
+    res.redirect('/login');
+});
 router.get("/dashboard", DashboardController.find);
 router.post("/dashboard/create-project", DashboardController.createProject);
 router.post("/dashboard/create-task", DashboardController.createTask);
