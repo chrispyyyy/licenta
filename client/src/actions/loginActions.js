@@ -34,7 +34,6 @@ export const postLoginAsync = dispatch => async payload => {
       dispatch(push("/dashboard"));
     })
     .catch(error => {
-      console.log("ee", error);
       dispatch(loginUserErrorAction(error));
     });
 };

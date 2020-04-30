@@ -2,30 +2,29 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Alert from "@material-ui/lab/Alert";
+import { Grid, Col, Row } from "react-styled-flexboxgrid";
 import "./login.css";
 
 export const Login = ({ loginUser, error }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  console.log('err', error.message);
+
   const submit = () => {
     loginUser({ email, password });
   };
   return (
-    <div>
-      <div
-        style={{
-          padding: "100px"
-        }}
-      >
+    <Grid>
         {/*{   error.message &&*/}
-        {/*  <div className="row input">*/}
-        {/*    <Alert severity="error" variant="outlined">*/}
-        {/*      {error}*/}
-        {/*    </Alert>*/}
-        {/*  </div>*/}
+         <Row style={{marginBottom:30, marginTop:30}}>
+           <Col lg={4} lgOffset={4}>
+            <Alert severity="error" variant="outlined">
+              wtf
+            </Alert>
+           </Col>
+         </Row>
         {/*}*/}
-        <div className="row input">
+       <Row style={{marginBottom:30}}>
+         <Col lg={4} lgOffset={4}>
           <TextField
             className="input"
             id="outlined-basic"
@@ -35,8 +34,10 @@ export const Login = ({ loginUser, error }) => {
             onChange={e => setEmail(e.target.value)}
             value={email}
           />
-        </div>
-        <div className="row input">
+         </Col>
+       </Row>
+        <Row style={{marginBottom:30}}>
+          <Col lg={4} lgOffset={4}>
           <TextField
             className="input"
             id="outlined-basic"
@@ -46,8 +47,10 @@ export const Login = ({ loginUser, error }) => {
             onChange={e => setPassword(e.target.value)}
             value={password}
           />
-        </div>
-        <div className="row input">
+          </Col>
+        </Row>
+       <Row style={{marginBottom:30}}>
+         <Col lg={4} lgOffset={4}>
           <Button variant="contained" color="secondary" onClick={submit}>
             {" "}
             Log In{" "}
@@ -57,8 +60,8 @@ export const Login = ({ loginUser, error }) => {
             {" "}
             Register{" "}
           </Button>
-        </div>
-      </div>
-    </div>
+         </Col>
+       </Row>
+    </Grid>
   );
 };

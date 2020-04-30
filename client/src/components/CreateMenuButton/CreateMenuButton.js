@@ -26,7 +26,11 @@ export const CreateMenuButton= () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
+
                 <MenuItem><Button href='/create-project'> Project </Button></MenuItem>
+                <MenuItem><Button href='/create-sprint'> Sprint </Button></MenuItem>
+                <MenuItem><Button href='/create-epic'> Epic </Button></MenuItem>
+                <MenuItem><Button href='/create-user-story'> User Story </Button></MenuItem>
                 <MenuItem><Button href='/create-task'> Task </Button></MenuItem>
             </Menu>
         </div>

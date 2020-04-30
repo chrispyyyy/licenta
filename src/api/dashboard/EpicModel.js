@@ -6,11 +6,21 @@ const epicSchema = new Schema({
     type: String,
     required: true
   },
-  assignee: [{
+  assignee: {
     type: Schema.Types.ObjectId,
     ref: "UserModel",
     required: true
-  }],
+  },
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: "UserModel",
+    required: true
+  },
+  project: {
+    type: Schema.Types.ObjectId,
+    ref: "ProjectModel",
+    required: true
+  },
   description: {
     type: String,
     required: true

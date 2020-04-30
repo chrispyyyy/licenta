@@ -37,6 +37,7 @@ export const DashboardPage = ({ projects, tasks, isFetching, epics, userStories 
 
   const classes = useStyles();
   return (
+
       <Container className={classes.container}>
       { isFetching ? <CircularProgress color="secondary" /> :
        <Grid container spacing={3}>
@@ -74,18 +75,7 @@ export const DashboardPage = ({ projects, tasks, isFetching, epics, userStories 
                 }
               </Paper>
               </Grid>
-              <Grid item xs={3}>
-              <Paper className={classes.paper}>xs=3</Paper>
-              </Grid>
-              <Grid item xs={3}>
-              <Paper className={classes.paper}>xs=3</Paper>
-              </Grid>
-              <Grid item xs={3}>
-              <Paper className={classes.paper}>xs=3</Paper>
-              </Grid>
-              <Grid item xs={3}>
-              <Paper className={classes.paper}>xs=3</Paper>
-              </Grid>
+
               </Grid>
 
       }

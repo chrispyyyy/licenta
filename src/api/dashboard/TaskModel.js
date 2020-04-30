@@ -11,18 +11,20 @@ const taskSchema = new Schema({
         ref: 'UserModel',
         required: true
     },
-    createdBy: {
+    creator: {
         type: Schema.Types.ObjectId,
         ref: 'UserModel',
         required: true
     },
-    sprint: {
-        type: Schema.Types.ObjectId,
-        ref: 'SprintModel',
-    },
     userStory: {
         type: Schema.Types.ObjectId,
         ref: 'UserStoryModel',
+        required: true
+    },
+    project: {
+        type: Schema.Types.ObjectId,
+        ref: 'ProjectModel',
+        required: true
     },
     description: {
         type: String,

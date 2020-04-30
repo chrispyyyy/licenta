@@ -11,7 +11,7 @@ const userStorySchema = new Schema({
         ref: 'UserModel',
         required: true
     },
-    createdBy: {
+    creator: {
         type: Schema.Types.ObjectId,
         ref: 'UserModel',
         required: true
@@ -28,10 +28,15 @@ const userStorySchema = new Schema({
     storyPoints: {
         type: Number
     },
-    tasks: {
+    epic: {
+        type: Schema.Types.ObjectId,
+        ref: "EpicModel",
+        required: true
+    },
+    tasks: [{
         type: Schema.Types.ObjectId,
         ref: "TaskModel",
-    },
+    }],
     status: {
         type: String,
         enum: ['TO_DO', 'IN_ANALYSIS', 'READY_FOR_DEVELOPMENT', 'IN_DEVELOPMENT', 'READY_FOR_TESTING', 'IN_TESTING', 'DONE'],
@@ -42,6 +47,15 @@ const userStorySchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "CommentModel",
     }],
+    project: {
+        type: Schema.Types.ObjectId,
+        ref: "ProjectModel",
+        required: true
+    },
+    sprint: {
+        type: Schema.Types.ObjectId,
+        ref: "SprintModel",
+    },
 });
 
 export const userStory = mongoose.model("userStory", userStorySchema);

@@ -10,7 +10,7 @@ exports.create = async (req, res, next) => {
             //if it exist we are returning an error message
             if (email_exist) {
                 return res.status(409)
-                    .json(vm.ApiResponse(false, 409, "email already exist"));
+                    .json(vm.ApiResponse(false, 409, "email already exists"));
             }
             // else we are creating a new user
             let registration_body = req.body;

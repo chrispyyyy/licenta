@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
-import { projectsSelector } from '../../selectors/projectsSelector';
-import { tasksSelector } from '../../selectors/tasksSelector';
-import { isFetchingSelector } from '../../selectors/isFetchingSelector';
 import {CreateProjectPage} from "../../pages/CreateProjectPage/CreateProjectPage";
+import {postProjectAsync} from "../../actions/projectActions";
+import {usersSelector} from "../../selectors/usersSelector";
 
 const mapStateToProps = state => ({
+    users: usersSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-
+    createProject: dispatch(postProjectAsync),
 });
 
 export const CreateProjectPageContainer = connect(mapStateToProps, mapDispatchToProps)(CreateProjectPage);

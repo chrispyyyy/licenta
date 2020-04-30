@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
-import { userErrorSelector } from '../../selectors/userErrorSelector';
+import { getProjectAsync } from '../../actions/projectActions';
 import { ProjectCard } from '../../components/ProjectCard';
 
 const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    showMore: dispatch(registerUserAction),
+    showProjectDetails: dispatch(getProjectAsync),
 });
 
 export const ProjectCardContainer = connect(mapStateToProps, mapDispatchToProps)(ProjectCard);

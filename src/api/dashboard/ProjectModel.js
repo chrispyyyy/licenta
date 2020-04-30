@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const UserModel = require('../authentication/register/UserModel');
 const Schema = mongoose.Schema;
 
 const projectSchema = new Schema({
@@ -9,9 +8,13 @@ const projectSchema = new Schema({
     },
     members: [{
         type: Schema.Types.ObjectId,
-        ref: UserModel,
+        ref: 'UserModel',
         required: true
     }],
+    description: {
+        type: String,
+        required: true
+    },
     epics: [{
         type: Schema.Types.ObjectId,
         ref: 'EpicModel',
