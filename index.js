@@ -14,9 +14,17 @@ const cookieSession = require("cookie-session");
 const port = process.env.PORT || config.get("app.port");
 const prefix = config.get("api.prefix");
 const db = config.get("database.url");
-const IN_PROD = config.get("app.environment") === "production";
+const IN_PROD = config.get("app.prodEnvironment") === "production";
 const app = express();
+const path = require('path');
 
+mongoose
+    .connect(db || 'mongodb://localhost:27017/my-db', { useNewUrlParser: true })
+    .then(() => {
+        app.listen(port, vm.log("listing on port", port));
+        vm.log("connected to mongoDB", db);
+    })
+    .catch(err => vm.log("error mongodb", err));
 
 const initialize = require("./passportConfig");
 initialize(passport);
@@ -47,14 +55,15 @@ app.use(passport.session());
 
 app.use(methodOverride());
 
+if (process.env.NODE_ENV === 'production'){
+    app.use(express.static('client/build'));
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+    })
+}
+
 app.use(prefix, RegisterRoute);
 app.use(prefix, LoginRoute);
 app.use(prefix, DashboardRoute);
 
-mongoose
-    .connect(db, { useNewUrlParser: true })
-    .then(() => {
-        app.listen(port, vm.log("listing on port", port));
-        vm.log("connected to mongoDB", db);
-    })
-    .catch(err => vm.log("error mongodb", err));
+

@@ -4,8 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node index.js",
-    "startAll": "(cd client && npm run start) & nodemon --exec babel-node index.js"
+    "start": "node index.js",
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "startAll": "(cd client && npm run start) & nodemon --exec babel-node index.js",
+    "heroku-postbuild": "npm run install-client && npm run build"
+  },
+  "engines": {
+    "node": "13.9.0",
+    "npm": "6.13.7"
   },
   "author": "Cristina Sirb",
   "license": "ISC",
