@@ -1,10 +1,9 @@
 import * as React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import { CreateMenuButton } from "../CreateMenuButton";
-import { Col, Row } from "react-styled-flexboxgrid";
+import { Col, Row, Grid } from "react-styled-flexboxgrid";
 import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles(theme => ({
@@ -28,9 +27,9 @@ export const Navigation = ({ logOut, loggedUser }) => {
   };
 
   return (
-    <Grid item xs={10} className={classes.grid}>
+    <Grid>
       <Paper className={classes.paper}>
-        <Row>
+        <Row lg={12}>
           <Col lg={2}>SCRUMMER</Col>
           {loggedUser && (
             <div className={classes.div}>
@@ -48,9 +47,9 @@ export const Navigation = ({ logOut, loggedUser }) => {
                 DASHBOARD
               </Link>
                 </Button>
-              <CreateMenuButton />
-              <Col lgOffset={25} lg={10}>
-                Hi, {loggedUser.firstName}
+              <CreateMenuButton loggedUser={loggedUser} />
+              <Col lgOffset={17} lg={10}>
+                Hi, <Button>{loggedUser.firstName + ' ' + loggedUser.lastName}</Button>
                 <Button onClick={onLogOut}> Log out</Button>
               </Col>
             </div>

@@ -359,7 +359,34 @@ exports.find = (req, res, next) => {
 
 //find a project by name
 exports.findProject = (req, res, next) => {
-  ProjectModel.findOne({ name: req.params.name })
+  ProjectModel.find({ name: req.params.name })
+    .populate({
+      path: "epics",
+      model: EpicModel
+    })
+    .populate({
+      path: "members",
+      model: UserModel,
+      select: ["firstName", "lastName"]
+    })
+    .populate({
+      path: "sprints",
+      model: SprintModel,
+      populate: [
+        {
+          path: "userStories",
+          model: UserStoryModel,
+          populate: [{ path: "assignee", model: UserModel, select: ["firstName", "lastName"]},
+              { path: "epic", model: EpicModel, select: "name"}]
+        },
+        { path: "tasks", model: TaskModel }
+      ]
+    })
+    .populate({
+      path: "userStories",
+      model: UserStoryModel,
+      populate: [{ path: "tasks", model: TaskModel }]
+    })
     .then(found => {
       if (!found) {
         return res
@@ -372,9 +399,12 @@ exports.findProject = (req, res, next) => {
             )
           );
       } else if (found) {
+        console.log(found);
         return res
           .status(200)
-          .json(vm.ApiResponse(true, 200, "project successfully found", found));
+          .json(
+            vm.ApiResponse(true, 200, "project wtf successfully found", found)
+          );
       }
     })
     .catch(error => {

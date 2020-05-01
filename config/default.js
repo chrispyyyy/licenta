@@ -7,8 +7,7 @@ module.exports = {
         baseUrl: `http://localhost:`,
         port: process.env.PORT,
         expiresIn: 72000000,
-        devEnvironment: process.env.NODE_ENV,
-        prodEnvironment: process.env.NODE_ENV_PROD,
+        environment: process.env.NODE_ENV,
         sessionName: process.env.SESS_NAME
     },
 

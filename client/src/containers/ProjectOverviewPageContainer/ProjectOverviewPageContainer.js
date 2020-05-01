@@ -1,13 +1,9 @@
 import { connect } from 'react-redux';
-import { projectsSelector } from '../../selectors/projectsSelector';
-import { isFetchingSelector } from '../../selectors/isFetchingSelector';
-import { filterEpicsByCurrentUser } from '../../helpers/filterEpicsByCurrentUser';
-import {filterUserStoriesByCurrentUser} from "../../helpers/filterUserStoriesByCurrentUser";
-import {filterTasksByCurrentUser} from "../../helpers/filterTasksByCurrentUser";
 import {ProjectOverviewPage} from "../../pages/ProjectOverviewPage";
+import {projectOverviewSelector} from "../../selectors/projectOverviewSelector";
 
 const mapStateToProps = state => ({
-
+project: projectOverviewSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
