@@ -7,6 +7,36 @@ import UserStoryModel from "./UserStoryModel.js";
 import UserModel from "../authentication/register/UserModel.js";
 const vm = require("v-response");
 
+exports.getUser = async (req, res, next) => {
+  console.log(req.user._id);
+  UserModel.find(req.user._id)
+    .then(user => {
+      if (!user) {
+        return res
+          .status(400)
+          .json(vm.ApiResponse(false, 400, "unable to find session user"));
+      } else if (user) {
+        console.log("qtf", user);
+        return res
+          .status(200)
+          .json(vm.ApiResponse(true, 200, "user session found", user));
+      }
+    })
+    .catch(error => {
+      return res
+        .status(500)
+        .json(
+          vm.ApiResponse(
+            false,
+            500,
+            "hoop internal server error",
+            undefined,
+            error
+          )
+        );
+    });
+};
+
 exports.createProject = async (req, res, next) => {
   // checking if the name provided already exist in the DB
   await ProjectModel.findOne({ name: req.body.name }).then(name_exist => {
@@ -19,7 +49,6 @@ exports.createProject = async (req, res, next) => {
     // else we are creating a new project
     let project_body = req.body;
     const new_project = new ProjectModel(project_body);
-    console.log(new_project);
     new_project
       .save()
       .then(saved => {
@@ -65,7 +94,7 @@ exports.createTask = async (req, res, next) => {
     // else we are creating a new task
     let task_body = req.body;
     const new_task = new TaskModel(task_body);
-    console.log("task: ", new_task);
+
     new_task
       .save()
       .then(saved => {
@@ -113,7 +142,6 @@ exports.createEpic = async (req, res, next) => {
     // else we are creating a new epic
     let epic_body = req.body;
     const new_epic = new EpicModel(epic_body);
-    console.log(new_epic);
     new_epic
       .save()
       .then(saved => {
@@ -161,11 +189,9 @@ exports.createUserStory = async (req, res, next) => {
     // else we are creating a new user story
     let user_story_body = req.body;
     const new_user_story = new UserStoryModel(user_story_body);
-    console.log(user_story_body);
     new_user_story
       .save()
       .then(saved => {
-        console.log("saved", saved);
         if (!saved) {
           return res
             .status(400)
@@ -218,7 +244,6 @@ exports.createSprint = async (req, res, next) => {
     new_sprint_body
       .save()
       .then(saved => {
-        console.log("saved", saved);
         if (!saved) {
           return res
             .status(400)
@@ -317,7 +342,15 @@ exports.find = (req, res, next) => {
     .populate({
       path: "userStories",
       model: UserStoryModel,
-      populate: [{ path: "tasks", model: TaskModel }]
+      populate: [
+        {
+          path: "assignee",
+          model: UserModel,
+          select: ["firstName", "lastName"]
+        },
+        { path: "epic", model: EpicModel, select: "name" },
+        { path: "tasks", model: TaskModel }
+      ]
     })
     .sort({
       createdAt: -1
@@ -358,7 +391,7 @@ exports.find = (req, res, next) => {
 };
 
 //find a project by name
-exports.findProject = (req, res, next) => {
+exports.findProject = async (req, res, next) => {
   ProjectModel.find({ name: req.params.name })
     .populate({
       path: "epics",
@@ -367,7 +400,7 @@ exports.findProject = (req, res, next) => {
     .populate({
       path: "members",
       model: UserModel,
-      select: ["firstName", "lastName"]
+      select: ["firstName", "lastName", "role"]
     })
     .populate({
       path: "sprints",
@@ -376,8 +409,14 @@ exports.findProject = (req, res, next) => {
         {
           path: "userStories",
           model: UserStoryModel,
-          populate: [{ path: "assignee", model: UserModel, select: ["firstName", "lastName"]},
-              { path: "epic", model: EpicModel, select: "name"}]
+          populate: [
+            {
+              path: "assignee",
+              model: UserModel,
+              select: ["firstName", "lastName"]
+            },
+            { path: "epic", model: EpicModel, select: "name" }
+          ]
         },
         { path: "tasks", model: TaskModel }
       ]
@@ -399,11 +438,96 @@ exports.findProject = (req, res, next) => {
             )
           );
       } else if (found) {
-        console.log(found);
         return res
           .status(200)
           .json(
             vm.ApiResponse(true, 200, "project wtf successfully found", found)
+          );
+      }
+    })
+    .catch(error => {
+      return res
+        .status(500)
+        .json(
+          vm.ApiResponse(
+            false,
+            500,
+            "hoop internal server error",
+            undefined,
+            error
+          )
+        );
+    });
+};
+
+exports.updateSprint = async (req, res) => {
+  SprintModel.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true })
+    .populate({
+      path: "userStories",
+      model: UserStoryModel,
+      populate: [
+        { path: "tasks", model: TaskModel },
+        { path: "epic", model: EpicModel },
+        { path: "assignee", model: UserModel }
+      ]
+    })
+    .then(found => {
+      if (!found) {
+        return res
+          .status(400)
+          .json(vm.ApiResponse(false, 400, "unable to update sprint"));
+      } else if (found) {
+        return res
+          .status(200)
+          .json(
+            vm.ApiResponse(true, 200, "sprint successfully updated", found)
+          );
+      }
+    })
+    .catch(error => {
+      return res
+        .status(500)
+        .json(
+          vm.ApiResponse(
+            false,
+            500,
+            "hoop internal server error",
+            undefined,
+            error
+          )
+        );
+    });
+};
+
+exports.updateUserStory = async (req, res) => {
+  console.log("ajunge");
+  UserStoryModel.findByIdAndUpdate({ _id: req.params.id }, req.body, {
+    new: true
+  })
+    .populate([
+      {
+        path: "tasks",
+        model: TaskModel
+      },
+      {
+        path: "assignee",
+        model: UserModel
+      },
+      {
+        path: "epic",
+        model: EpicModel
+      }
+    ])
+    .then(found => {
+      if (!found) {
+        return res
+          .status(400)
+          .json(vm.ApiResponse(false, 400, "unable to update user story"));
+      } else if (found) {
+        return res
+          .status(200)
+          .json(
+            vm.ApiResponse(true, 200, "user story successfully updated", found)
           );
       }
     })

@@ -27,7 +27,7 @@ export const TaskExpansionPanel = ({ showMore, task, epic, userStory }) => {
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
-  console.log("us", userStory);
+  console.log("us", epic);
   return (
     <div className={classes.root}>
       <ExpansionPanel

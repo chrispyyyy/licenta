@@ -34,7 +34,7 @@ export const postProjectAsync = dispatch => async payload => {
     )
     .then(response => {
       dispatch(createProjectSuccessAction(response.data.data));
-      // dispatch(push('/dashboard'))
+      dispatch(push('/dashboard'))
     })
     .catch(error => {
       dispatch(createProjectErrorAction(error));
@@ -67,8 +67,8 @@ export const getProjectAsync = name => {
     axiosInstance
       .get(url, { withCredentials: true })
       .then(response => {
-        dispatch(push(url));
         dispatch(getProjectSuccessAction(response.data.data));
+        dispatch(push(url));
       })
       .catch(error => {
         console.error("Error while getting data: ", error);

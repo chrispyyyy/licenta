@@ -30,9 +30,11 @@ export const CreateMenuButton = ({ loggedUser }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+          {loggedUser.role === "PRODUCT_OWNER" && (
         <MenuItem>
           <Button href="/create-project"> Project </Button>
         </MenuItem>
+          )}
         {loggedUser.role === "SCRUM_MASTER" && (
           <MenuItem>
             <Button href="/create-sprint"> Sprint </Button>

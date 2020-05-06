@@ -1,34 +1,33 @@
 import axiosInstance from "../helpers/axiosInstance";
 
-const fetchUsers = () => {
+const fetchUser = () => {
     return {
-        type: 'FETCH_USERS'
+        type: 'FETCH_USER'
     }
 };
-const fetchUsersError = (error) => {
+const fetchUserError = (error) => {
     return {
-        type: 'FETCH_USERS_FAILED',
+        type: 'FETCH_USER_FAILED',
         payload: error,
     }
 };
-const fetchUsersSuccess = (users) => {
+const fetchUserSuccess = (user) => {
     return {
-        type: 'FETCH_USERS_SUCCESS',
-        payload: users,
+        type: 'FETCH_USER_SUCCESS',
+        payload: user,
     }
 };
 
-export const getUsersAsync = () => {
+export const getUserAsync = () => {
     return function(dispatch) {
-        dispatch(fetchUsers());
+        dispatch(fetchUser());
         axiosInstance
-            .get('/dashboard/create-project')
+            .get('/user')
             .then(response => {
-                    dispatch(fetchUsersSuccess(response.data.data));
+                    dispatch(fetchUserSuccess(response.data.data));
             })
             .catch(error => {
-                console.error('Error while getting data: ', error);
-                dispatch(fetchUsersError(error));
+                dispatch(fetchUserError(error));
             })
     }
 };

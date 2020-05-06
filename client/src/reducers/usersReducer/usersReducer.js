@@ -16,6 +16,7 @@ const reducers = {
     [USER_ACTIONS.LOG_IN_FAILED]: userErrorReducer,
     [USER_ACTIONS.LOG_OUT]: logOutUserReducer,
     [USER_ACTIONS.FETCH_USERS_SUCCESS]: setUsersReducer,
+    'FETCH_USER_SUCCESS': loginUserReducer,
 };
 
 export const usersReducer = (

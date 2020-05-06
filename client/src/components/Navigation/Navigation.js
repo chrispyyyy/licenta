@@ -5,6 +5,8 @@ import Button from "@material-ui/core/Button";
 import { CreateMenuButton } from "../CreateMenuButton";
 import { Col, Row, Grid } from "react-styled-flexboxgrid";
 import Link from "@material-ui/core/Link";
+import { useDispatch } from "react-redux";
+import { push } from "connected-react-router";
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -25,6 +27,8 @@ export const Navigation = ({ logOut, loggedUser }) => {
   const onLogOut = () => {
     logOut();
   };
+const dispatch = useDispatch();
+const goToMyProfile = () => dispatch(push('/my-profile'));
 
   return (
     <Grid>
@@ -49,7 +53,7 @@ export const Navigation = ({ logOut, loggedUser }) => {
                 </Button>
               <CreateMenuButton loggedUser={loggedUser} />
               <Col lgOffset={17} lg={10}>
-                Hi, <Button>{loggedUser.firstName + ' ' + loggedUser.lastName}</Button>
+                Hi, <Button onClick={() => goToMyProfile()}>{loggedUser.firstName + ' ' + loggedUser.lastName}</Button>
                 <Button onClick={onLogOut}> Log out</Button>
               </Col>
             </div>

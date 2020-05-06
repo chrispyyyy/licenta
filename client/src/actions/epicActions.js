@@ -31,7 +31,7 @@ export const postEpicAsync = (dispatch) => async (payload) =>{
         priority: payload.priority,
     }, { withCredentials: true }).then(response => {
         dispatch(createEpicSuccessAction(response.data.data));
-        // dispatch(push('/dashboard'))
+        dispatch(push('/dashboard'))
     }).catch(error => {
         dispatch(createEpicErrorAction(error));
     })

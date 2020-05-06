@@ -5,6 +5,7 @@ import { isFetchingSelector } from '../../selectors/isFetchingSelector';
 import { filterEpicsByCurrentUser } from '../../helpers/filterEpicsByCurrentUser';
 import {filterUserStoriesByCurrentUser} from "../../helpers/filterUserStoriesByCurrentUser";
 import {filterTasksByCurrentUser} from "../../helpers/filterTasksByCurrentUser";
+import {sprintsSelector} from "../../selectors/sprintsSelector";
 
 const mapStateToProps = state => ({
     projects: projectsSelector(state),
@@ -12,6 +13,7 @@ const mapStateToProps = state => ({
     userStories: filterUserStoriesByCurrentUser(state),
     tasks: filterTasksByCurrentUser(state),
     isFetching: isFetchingSelector(state),
+    sprints: sprintsSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

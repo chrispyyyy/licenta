@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Alert from "@material-ui/lab/Alert";
 import { Grid, Col, Row } from "react-styled-flexboxgrid";
 import "./login.css";
+import {Typography} from "@material-ui/core";
 
 export const Login = ({ loginUser, error }) => {
   const [email, setEmail] = useState("");
@@ -14,17 +15,22 @@ export const Login = ({ loginUser, error }) => {
   };
   return (
     <Grid>
-        {/*{   error.message &&*/}
-         <Row style={{marginBottom:30, marginTop:30}}>
-           <Col lg={4} lgOffset={4}>
-            <Alert severity="error" variant="outlined">
-              wtf
-            </Alert>
-           </Col>
-         </Row>
-        {/*}*/}
-       <Row style={{marginBottom:30}}>
-         <Col lg={4} lgOffset={4}>
+      {/*{error && (*/}
+      {/*  <Row style={{ marginBottom: 30, marginTop: 30 }}>*/}
+      {/*    <Col lg={4} lgOffset={4}>*/}
+      {/*      <Alert severity="error" variant="outlined">*/}
+      {/*        {error}*/}
+      {/*      </Alert>*/}
+      {/*    </Col>*/}
+      {/*  </Row>*/}
+      {/*)}*/}
+      <Row style={{ marginBottom: 20, marginTop: 20 }}>
+        <Col lg={4} lgOffset={4}>
+          <Typography variant="h3">Log In</Typography>
+        </Col>
+      </Row>
+      <Row style={{ marginBottom: 30 }}>
+        <Col lg={4} lgOffset={4}>
           <TextField
             className="input"
             id="outlined-basic"
@@ -34,11 +40,12 @@ export const Login = ({ loginUser, error }) => {
             onChange={e => setEmail(e.target.value)}
             value={email}
           />
-         </Col>
-       </Row>
-        <Row style={{marginBottom:30}}>
-          <Col lg={4} lgOffset={4}>
+        </Col>
+      </Row>
+      <Row style={{ marginBottom: 30 }}>
+        <Col lg={4} lgOffset={4}>
           <TextField
+            type="password"
             className="input"
             id="outlined-basic"
             label="Password"
@@ -47,10 +54,10 @@ export const Login = ({ loginUser, error }) => {
             onChange={e => setPassword(e.target.value)}
             value={password}
           />
-          </Col>
-        </Row>
-       <Row style={{marginBottom:30}}>
-         <Col lg={4} lgOffset={4}>
+        </Col>
+      </Row>
+      <Row style={{ marginBottom: 30 }}>
+        <Col lg={4} lgOffset={4}>
           <Button variant="contained" color="secondary" onClick={submit}>
             {" "}
             Log In{" "}
@@ -60,8 +67,8 @@ export const Login = ({ loginUser, error }) => {
             {" "}
             Register{" "}
           </Button>
-         </Col>
-       </Row>
+        </Col>
+      </Row>
     </Grid>
   );
 };

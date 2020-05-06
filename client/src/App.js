@@ -13,6 +13,7 @@ import {CreateTaskPageContainer} from "./containers/CreateTaskPageContainer";
 import {ProjectOverviewPageContainer} from "./containers/ProjectOverviewPageContainer";
 import {connect} from "react-redux";
 import {CreatesSprintPageContainer} from "./containers/CreateSprintPageContainer";
+import {MyProfilePageContainer} from "./containers/MyProfilePageContainer";
 
 const mapStateToProps = state => ({
   isLoggedIn: state.users.loggedUser
@@ -43,6 +44,7 @@ function App() {
           <ProtectedRoute exact path="/create-user-story" component={ CreateUserStoryPageContainer } />
           <ProtectedRoute exact path="/create-task" component={ CreateTaskPageContainer } />
           <ProtectedRoute exact path="/create-sprint" component={ CreatesSprintPageContainer } />
+            <ProtectedRoute exact path="/my-profile" component={MyProfilePageContainer} />
           <Redirect from="/" to="/login"/>
         </Switch>
         </Container>
